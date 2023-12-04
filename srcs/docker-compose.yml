@@ -1,0 +1,76 @@
+version: "3"
+
+services:
+ mariadb:
+  build:
+   context: ./requirements/mariadb/
+   dockerfile: Dockerfile
+  image: mariadb:10.6.14
+  container_name: mariadb
+  pull_policy: never
+  expose:
+   - "3306"
+  env_file:
+   - .env
+  networks:
+   - chanheki_net
+  volumes:
+   - db-volume:/var/lib/mysql
+  restart: on-failure
+
+ wordpress:
+  depends_on:
+   - mariadb
+  build:
+   context: ./requirements/wordpress/
+   dockerfile: Dockerfile
+  image: wordpress:6.4.1
+  container_name: wordpress
+  pull_policy: never
+  expose:
+   - "9000"
+  env_file:
+   - .env
+  networks:
+   - chanheki_net
+  volumes:
+   - wp-volume:/var/www
+  restart: on-failure
+
+ nginx:
+  depends_on:
+   - mariadb
+   - wordpress
+  build:
+   context: ./requirements/nginx/
+   dockerfile: Dockerfile
+  image: nginx:1.24.0
+  container_name: nginx
+  pull_policy: never
+  env_file:
+   - .env
+  networks:
+   - chanheki_net
+  volumes:
+   - wp-volume:/var/www
+  ports:
+   - "443:443"
+  restart: on-failure
+
+networks:
+ chanheki_net:
+  driver: bridge 
+
+volumes:
+ wp-volume:
+   driver: local
+   driver_opts:
+     o: bind
+     type: none
+     device: /home/chanheki/data/wordpress
+ db-volume:
+   driver: local
+   driver_opts:
+     o: bind
+     type: none
+     device: /home/chanheki/data/mariadb
