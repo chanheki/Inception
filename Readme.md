@@ -12,6 +12,7 @@
 ## [Docker Compose](https://docs.docker.com/compose/)
 - [Use Docker Compose](https://docs.docker.com/get-started/08_using_compose/)
 - [Docker Version ](https://docs.docker.com/compose/compose-file/compose-file-v3/)
+- [man docker-compose](https://docs.docker.com/compose/reference/overview/)
 
 ---
 
@@ -25,6 +26,7 @@
 ## [Nginx](https://www.nginx.com/)
  - [Docker with Nginx](https://docs.docker.com/get-started/07_multi_container/#run-your-app-with-nginx)
  - [Nginx Full Example Configuration](https://www.nginx.com/resources/wiki/start/topics/examples/full/)
+ - [man Nginx](https://linux.die.net/man/8/nginx)
  - [OpenSSL](https://www.openssl.org/)
 
 ---
